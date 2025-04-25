@@ -4,8 +4,8 @@ import Chatbot from '../components/Chatbot';
 
 const StockChart = () => {
   const [darkMode, setDarkMode] = useState(false);
-  const [prediction, setPrediction] = useState('');
-  const [copied, setCopied] = useState(false);
+  // const [prediction, setPrediction] = useState('');
+  // const [copied, setCopied] = useState(false);
   const [timePeriod, setTimePeriod] = useState('1D');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -44,16 +44,16 @@ const StockChart = () => {
     }
   });
 
-  useEffect(() => {
-    // Generate sample prediction for Sensex
-    const trends = ['bullish', 'bearish', 'neutral'];
-    const trend = trends[Math.floor(Math.random() * trends.length)];
-    const changePercent = (Math.random() * 5).toFixed(2);
-    const predictionText = `Sensex shows ${trend} momentum (${trend === 'bullish' ? '+' : ''}${changePercent}%). ` +
-      `Key levels: Resistance ~₹${(60000 + Math.random() * 2000).toFixed(2)}, ` +
-      `Support ~₹${(58000 + Math.random() * 2000).toFixed(2)}`;
-    setPrediction(predictionText);
-  }, [timePeriod]);
+  // useEffect(() => {
+  //   // Generate sample prediction for Sensex
+  //   const trends = ['bullish', 'bearish', 'neutral'];
+  //   // const trend = trends[Math.floor(Math.random() * trends.length)];
+  //   // const changePercent = (Math.random() * 5).toFixed(2);
+  //   // const predictionText = `Sensex shows ${trend} momentum (${trend === 'bullish' ? '+' : ''}${changePercent}%). ` +
+  //     `Key levels: Resistance ~₹${(60000 + Math.random() * 2000).toFixed(2)}, ` +
+  //     `Support ~₹${(58000 + Math.random() * 2000).toFixed(2)}`;
+  //   // setPrediction(predictionText);
+  // }, [timePeriod]);
 
   useEffect(() => {
     setLoading(true);
@@ -157,17 +157,7 @@ const StockChart = () => {
     setError(null);
   };
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(prediction);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy:', err);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
+  
 
   return (
     <div className={`min-h-screen p-4 md:p-6 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-50 text-gray-800'}`}>
@@ -253,7 +243,7 @@ const StockChart = () => {
           </div>
         )}
 
-        {/* Prediction Section */}
+        {/* Prediction Section
         {!loading && !error && (
           <div className={`p-4 rounded-xl shadow-lg mb-6 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-blue-50 border-blue-200'} border`}>
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
@@ -284,7 +274,7 @@ const StockChart = () => {
               </button>
             </div>
           </div>
-        )}
+        )} */}
       </div>
       <Chatbot/>
     </div>

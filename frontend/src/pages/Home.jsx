@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, BarChart2, Cpu, Settings, Shield, Sparkles, Rocket, TrendingUp, Zap } from "lucide-react";
 import Chatbot from "../components/Chatbot";
-import { motion, useAnimation } from "framer-motion";
+import { motion,useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 const Home = () => {

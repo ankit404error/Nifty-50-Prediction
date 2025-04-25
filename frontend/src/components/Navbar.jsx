@@ -6,84 +6,8 @@ const Navbar = () => {
   const { user, isSignedIn } = useUser();
   const { signOut } = useClerk();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileDropdown, setMobileDropdown] = useState(null);
 
   const handleLogout = () => signOut();
-
-  const dropdownItems = {
-    products: [
-      { name: "Residential Proxies", link: "/products/residential", icon: "🏠" },
-      { name: "Datacenter Proxies", link: "/products/datacenter", icon: "🖥️" },
-      { name: "Mobile Proxies", link: "/products/mobile", icon: "📱" }
-    ],
-    locations: [
-      { name: "North America", link: "/locations/na", icon: "🇺🇸" },
-      { name: "Europe", link: "/locations/eu", icon: "🇪🇺" },
-      { name: "Asia", link: "/locations/asia", icon: "🇨🇳" }
-    ],
-    useCases: [
-      { name: "Web Scraping", link: "/use-cases/scraping", icon: "🕸️" },
-      { name: "SEO Monitoring", link: "/use-cases/seo", icon: "🔍" },
-      { name: "Ad Verification", link: "/use-cases/ads", icon: "📢" }
-    ],
-    resources: [
-      { name: "Documentation", link: "/docs", icon: "📚" },
-      { name: "API Reference", link: "/api", icon: "⚙️" },
-      { name: "Help Center", link: "/help", icon: "❓" }
-    ]
-  };
-
-  const renderDesktopDropdown = (key, title) => (
-    <div className="group relative">
-      <button className="flex items-center text-gray-700 hover:text-indigo-600 transition-colors px-3 py-2 font-medium text-sm">
-        {title}
-        <svg className="ml-1 h-4 w-4 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      <div className="absolute left-0 mt-2 w-56 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all duration-150 ease-in-out z-50 transform">
-        <div className="py-1">
-          {dropdownItems[key].map((item) => (
-            <Link
-              key={item.name}
-              to={item.link}
-              className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-900 transition-colors"
-            >
-              <span className="mr-2">{item.icon}</span>
-              {item.name}
-            </Link>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderMobileDropdown = (key, title) => (
-    <div className="border-b border-gray-100">
-      <button 
-        onClick={() => setMobileDropdown(mobileDropdown === key ? null : key)}
-        className="flex justify-between items-center w-full py-3 px-4 text-gray-700 font-medium"
-      >
-        <span>{title}</span>
-        <svg className={`h-5 w-5 transform transition-transform ${mobileDropdown === key ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      <div className={`overflow-hidden transition-all duration-300 ${mobileDropdown === key ? 'max-h-40' : 'max-h-0'}`}>
-        {dropdownItems[key].map((item) => (
-          <Link
-            key={item.name}
-            to={item.link}
-            className="flex items-center py-2 px-6 text-gray-600 hover:bg-indigo-50 hover:text-indigo-600"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            <span className="mr-2">{item.icon}</span>
-            {item.name}
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50 backdrop-blur-sm bg-opacity-80">
@@ -104,12 +28,19 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            {renderDesktopDropdown('products', 'Products')}
-            {renderDesktopDropdown('locations', 'Locations')}
-            {renderDesktopDropdown('useCases', 'Use Cases')}
-            {renderDesktopDropdown('resources', 'Resources')}
-            
+          <div className="hidden md:flex items-center space-x-6">
+            <Link 
+              to="/api" 
+              className="px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium text-sm transition-colors"
+            >
+              API
+            </Link>
+            <Link 
+              to="/docs" 
+              className="px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium text-sm transition-colors"
+            >
+              Documentation
+            </Link>
             <Link 
               to="/pricing" 
               className="px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium text-sm transition-colors"
@@ -183,12 +114,21 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'} bg-white shadow-lg`}>
-        <div className="pt-2 pb-4">
-          {renderMobileDropdown('products', 'Products')}
-          {renderMobileDropdown('locations', 'Locations')}
-          {renderMobileDropdown('useCases', 'Use Cases')}
-          {renderMobileDropdown('resources', 'Resources')}
-          
+        <div className="pt-2 pb-4 space-y-1">
+          <Link
+            to="/api"
+            className="block py-3 px-4 text-gray-700 border-b border-gray-100 hover:bg-indigo-50 hover:text-indigo-600 font-medium"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            API
+          </Link>
+          <Link
+            to="/docs"
+            className="block py-3 px-4 text-gray-700 border-b border-gray-100 hover:bg-indigo-50 hover:text-indigo-600 font-medium"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Documentation
+          </Link>
           <Link
             to="/pricing"
             className="block py-3 px-4 text-gray-700 border-b border-gray-100 hover:bg-indigo-50 hover:text-indigo-600 font-medium"
